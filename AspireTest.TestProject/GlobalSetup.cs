@@ -23,6 +23,7 @@ public class GlobalSetup
         {
             clientBuilder.AddStandardResilienceHandler();
         });
+        appHost.Configuration["ASPIRE_ALLOW_UNSECURED_TRANSPORT"] = "true";
 
         App = await appHost.BuildAsync();
         NotificationService = App.Services.GetRequiredService<ResourceNotificationService>();
