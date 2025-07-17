@@ -6,6 +6,13 @@ namespace AspireTest.TestProject.Tests;
 [NotInParallel]
 public class Playwright : PageTest
 {
+    public override BrowserNewContextOptions ContextOptions(TestContext testContext)
+    {
+        var options = base.ContextOptions(testContext);
+        options.IgnoreHTTPSErrors = true; // GitHub Actions CI
+        return options;
+    }
+
     [Test]
     [NotInParallel]
     public async Task Test()
@@ -33,7 +40,7 @@ public class Playwright : PageTest
 
         // Go to page
         await Page.GotoAsync(urlSought.ToString());
-        
+
         // Click the 'weather' link
         await Page.GetByRole(AriaRole.Link, new PageGetByRoleOptions { Name = "Weather" }).ClickAsync();
 
