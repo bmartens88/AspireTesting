@@ -14,7 +14,6 @@ public class Playwright : PageTest
     }
 
     [Test]
-    [NotInParallel]
     public async Task Test()
     {
         // Reference to web app
@@ -32,7 +31,6 @@ public class Playwright : PageTest
     }
 
     [Test]
-    [NotInParallel]
     public async Task AnotherTest()
     {
         // Reference to web app
