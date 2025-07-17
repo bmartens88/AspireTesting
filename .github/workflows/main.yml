@@ -14,6 +14,8 @@ jobs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 9.0.x
+    - name: Setup SSL cert
+      run: dotnet dev-certs https --trust
     - name: Build & Install
       run: dotnet build
     - name: Ensure browsers are installed
