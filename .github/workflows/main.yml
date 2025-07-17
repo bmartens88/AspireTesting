@@ -8,12 +8,18 @@ jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
+    env:
+      ASPIRE_ALLOW_UNSECURED_TRANSPORT: true
     steps:
     - uses: actions/checkout@v4
+    - name: Install Docker
+      uses: docker/setup-docker-action@v4
     - name: Setup dotnet
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 9.0.x
+    - name: Install & trust dev-certs
+      run: dotnet dev-certs https --trust
     - name: Build & Install
       run: dotnet build
     - name: Ensure browsers are installed
