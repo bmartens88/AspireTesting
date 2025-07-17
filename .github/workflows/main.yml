@@ -18,11 +18,20 @@ jobs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 9.0.x
+        cache: true
     - name: Install & trust dev-certs
       run: dotnet dev-certs https --trust
     - name: Build & Install
       run: dotnet build
+    - name: Cache Playwright binaries
+      id: cache-playwright-browsers
+      uses: actions/cache@v4
+      with:
+        path: |
+          AspireTest.TestProject/bin/Debug/net9.0/.playwright
+        key: ${{ runner.os }}-playwright
     - name: Ensure browsers are installed
+      if: steps.cache-playwright-browsers.outputs.cache-hit != 'true'
       run: pwsh AspireTest.TestProject/bin/Debug/net9.0/playwright.ps1 install --with-deps
     - name: Run tests
       run: dotnet test
