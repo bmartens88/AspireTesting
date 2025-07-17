@@ -31,7 +31,7 @@ jobs:
     - name: Install & trust dev-certs
       run: dotnet dev-certs https --trust
     - name: Build & Install
-          dotnet build --no-restore
+      run: dotnet build --no-restore
     - name: Cache Playwright binaries
       id: cache-playwright-browsers
       uses: actions/cache@v4
