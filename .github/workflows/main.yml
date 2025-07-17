@@ -1,4 +1,4 @@
-name: Testing
+name: Tests
 on:
   push:
     branches: [ main, master ]
@@ -9,14 +9,14 @@ jobs:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: Setup dotnet
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: 9.0.x
-      - name: Build & Install
-        run: dotnet build
-      - name: Ensure browsers are installed (Playwright)
-        run: pwsh bin/Debug/net9.0/playwright.ps1 install --with-deps
-      - name: Run tests
-        run: dotnet test
+    - uses: actions/checkout@v4
+    - name: Setup dotnet
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 9.0.x
+    - name: Build & Install
+      run: dotnet build
+    - name: Ensure browsers are installed
+      run: pwsh bin/Debug/net9.0/playwright.ps1 install --with-deps
+    - name: Run tests
+      run: dotnet test
