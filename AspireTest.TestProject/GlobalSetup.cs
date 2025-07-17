@@ -30,10 +30,10 @@ public class GlobalSetup
     }
 
     [After(TestSession)]
-    public static void CleanUp()
+    public static async Task CleanUp()
     {
         Console.WriteLine("...and after!");
-        App?.Dispose();
+        await (App?.DisposeAsync() ?? ValueTask.CompletedTask);
         NotificationService?.Dispose();
     }
 }
