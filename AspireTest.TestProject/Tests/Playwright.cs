@@ -49,7 +49,16 @@ public class Playwright : PageTest
         var table = Page.GetByRole(AriaRole.Table);
         await Expect(table).ToHaveCountAsync(1);
 
+        var rows = table.GetByRole(AriaRole.Row);
         // Should contain 5 rows, including the header row
-        await Expect(table.GetByRole(AriaRole.Row)).ToHaveCountAsync(6);
+        await Expect(rows).ToHaveCountAsync(6);
+
+        var index = 1;
+        foreach (var row in (await rows.AllAsync()).Skip(1))
+        {
+            // First row of the table should have a column with the date of tomorrow in format DD-M-YYYY
+            await Expect(row.GetByRole(AriaRole.Cell).First).ToHaveTextAsync(DateTime.Now.AddDays(index).ToShortDateString());
+            index++;
+        }
     }
 }
