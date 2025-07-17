@@ -32,7 +32,11 @@ jobs:
     - name: Install & trust dev-certs
       run: dotnet dev-certs https --trust
     - name: Build & Install
-      run: dotnet build --no-restore
+      run: |
+        if [ ${{ steps.cache-nuget.outputs.cache-hit == 'true' }} ]; then
+          dotnet build
+        else
+          dotnet build --no-restore
     - name: Cache Playwright binaries
       id: cache-playwright-browsers
       uses: actions/cache@v4
